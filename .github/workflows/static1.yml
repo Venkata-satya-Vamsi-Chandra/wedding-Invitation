@@ -5,9 +5,6 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-    # Only run when demo/ changes
-    paths:
-      - 'demo/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,16 +33,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Prepare site directory
-        run: |
-          rm -rf site || true
-          mkdir site
-          cp -r demo/* site/  # copy demo contents to site root for publishing
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload prepared `site` folder so demo/index.html becomes root index.html
-          path: 'site'
+          # Upload entire repository
+          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
